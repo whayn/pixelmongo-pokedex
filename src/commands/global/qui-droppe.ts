@@ -54,7 +54,7 @@ module.exports = {
 				interaction.editReply({ content: `Récupération des données ${i}/${pokemons.length}` })
 			}
 
-			if (!formatedPokemons[0].name) return interaction.editReply(Notifier.error(`Aucun pokemon non légendaire ne droppe : \`${ressource}\` (ex: minecraft:dirt)`))
+			if (!formatedPokemons[0]) return interaction.editReply(Notifier.error(`Aucun pokemon non légendaire ne droppe : \`${ressource}\` (ex: minecraft:dirt)`))
 
 			const researchResultsEmbed = createShortSearchresult(formatedPokemons, drop, client)
 			interaction.editReply(researchResultsEmbed)
