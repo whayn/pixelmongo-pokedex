@@ -1,0 +1,22 @@
+{
+	"name": "pixelmongo-pokedex",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "tsc && node dist/index.js",
+		"deploy": "tsc && node dist/deployer.js",
+		"scraper-test": "tsc && node dist/utils/wiki-scraper",
+		"dumper": "tsc && node dist/dumper"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"cheerio": "^1.0.0-rc.12",
+		"discord.js": "^14.9.0",
+		"dotenv": "^16.0.3",
+		"fuse.js": "^6.6.2"
+	}
+}
