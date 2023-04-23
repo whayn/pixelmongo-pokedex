@@ -130,7 +130,7 @@ export async function getPokemonForDrops(search: string): Promise<{ pokemons: Po
 
 	const fuse = new Fuse(possibleDrops)
 	const research = fuse.search(search)
-	if (research.length === 0) throw { code: "no_esults", message: `${errorMessages.no_results} ${search}` }
+	if (research.length === 0) throw { code: "no_results", message: `${errorMessages.no_results} ${search}` }
 
 	const drop = research[0].item
 

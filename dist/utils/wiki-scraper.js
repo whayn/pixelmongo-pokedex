@@ -11,7 +11,8 @@ const fuse_js_1 = __importDefault(require("fuse.js"));
 const pokedrops = pokedrops_json_1.default;
 const errorMessages = {
     incorrect_poke: "Le pokemon spécifié est introuvable.",
-    unexpected_poke: "Une erreur est survenue."
+    unexpected_poke: "Une erreur est survenue.",
+    no_results: "Aucun drop ne correspond à"
 };
 async function getPokeDrops(pokemon) {
     try {
@@ -77,11 +78,14 @@ async function getPokeSpawns(pokemon) {
     }
 }
 exports.getPokeSpawns = getPokeSpawns;
-function getPokemonForDrops(search) {
+async function getPokemonForDrops(search) {
     const possibleDrops = [...new Set(pokedrops.flatMap((pokemon) => ["maindropdata", "raredropdata", "optdrop1data", "optdrop2data"]
             .map((dropType) => (pokemon[dropType] || undefined))).filter(drop => drop !== undefined))];
     const fuse = new fuse_js_1.default(possibleDrops);
-    const drop = fuse.search(search)[0].item;
+    const research = fuse.search(search);
+    if (research.length === 0)
+        throw { code: "no_esults", message: `${errorMessages.no_results} ${search}` };
+    const drop = research[0].item;
     return {
         pokemons: pokedrops.flatMap((pokemon) => ["maindropdata", "raredropdata", "optdrop1data", "optdrop2data"]
             .map((dropType) => ({

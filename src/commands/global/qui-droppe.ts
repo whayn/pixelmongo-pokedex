@@ -18,12 +18,7 @@ module.exports = {
 		try {
 			await interaction.reply({ content: "Récupération des données" })
 			const ressource = interaction.options.get('ressource')?.value?.toString() || "minecraft:dirt"
-			const { pokemons, drop } = await getPokemonForDrops(ressource || "minecraft:dirt").catch(err => {
-				if (err.type && err.type == "no_results") {
-					return interaction.editReply(Notifier.error(err.message)) as any
-				}
-				throw err
-			})
+			const { pokemons, drop } = await getPokemonForDrops(ressource || "minecraft:dirt")
 
 			if (!pokemons[0]) return interaction.editReply(Notifier.error(`Aucun pokemon ne droppe : \`${ressource}\` (ex: minecraft:dirt)`))
 

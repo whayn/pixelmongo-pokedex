@@ -17,7 +17,12 @@ module.exports = {
         try {
             await interaction.reply({ content: "Récupération des données" });
             const ressource = interaction.options.get('ressource')?.value?.toString() || "minecraft:dirt";
-            const { pokemons, drop } = (0, wiki_scraper_1.getPokemonForDrops)(ressource || "minecraft:dirt");
+            const { pokemons, drop } = await (0, wiki_scraper_1.getPokemonForDrops)(ressource || "minecraft:dirt").catch(err => {
+                if (err.type && err.type == "no_results") {
+                    return interaction.editReply(notifier_1.Notifier.error(err.message));
+                }
+                throw err;
+            });
             if (!pokemons[0])
                 return interaction.editReply(notifier_1.Notifier.error(`Aucun pokemon ne droppe : \`${ressource}\` (ex: minecraft:dirt)`));
             const formatedPokemons = [];
@@ -51,7 +56,7 @@ module.exports = {
                     formatedPokemons.push(pokemon);
                 interaction.editReply({ content: `Récupération des données ${i}/${pokemons.length}` });
             }
-            if (!formatedPokemons[0].name)
+            if (!formatedPokemons[0])
                 return interaction.editReply(notifier_1.Notifier.error(`Aucun pokemon non légendaire ne droppe : \`${ressource}\` (ex: minecraft:dirt)`));
             const researchResultsEmbed = (0, utils_1.createSearchResult)(formatedPokemons, drop, client);
             interaction.editReply(researchResultsEmbed);
