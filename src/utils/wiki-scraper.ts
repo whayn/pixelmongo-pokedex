@@ -51,7 +51,8 @@ interface FilteredPokeDrops {
 
 const errorMessages = {
 	incorrect_poke: "Le pokemon spécifié est introuvable.",
-	unexpected_poke: "Une erreur est survenue."
+	unexpected_poke: "Une erreur est survenue.",
+	no_results: "Aucun drop ne correspond à"
 }
 
 
@@ -120,7 +121,7 @@ export async function getPokeSpawns(pokemon: string): Promise<Spawn[]> {
 	}
 }
 
-export function getPokemonForDrops(search: string): { pokemons: PokeDrops[]; drop: string | number | undefined } {
+export async function getPokemonForDrops(search: string): Promise<{ pokemons: PokeDrops[]; drop: string | number | undefined }> {
 	const possibleDrops = [...new Set(pokedrops.flatMap((pokemon) =>
 		["maindropdata", "raredropdata", "optdrop1data", "optdrop2data"]
 			.map((dropType: any) => (
@@ -128,8 +129,10 @@ export function getPokemonForDrops(search: string): { pokemons: PokeDrops[]; dro
 			))).filter(drop => drop !== undefined))]
 
 	const fuse = new Fuse(possibleDrops)
-	const drop = fuse.search(search)[0].item
+	const research = fuse.search(search)
+	if (research.length === 0) throw { code: "no_esults", message: `${errorMessages.no_results} ${search}` }
 
+	const drop = research[0].item
 
 	return {
 		pokemons: pokedrops.flatMap((pokemon) =>
