@@ -84,7 +84,7 @@ async function getPokemonForDrops(search) {
     const fuse = new fuse_js_1.default(possibleDrops);
     const research = fuse.search(search);
     if (research.length === 0)
-        throw { code: "no_esults", message: `${errorMessages.no_results} ${search}` };
+        throw { code: "no_results", message: `${errorMessages.no_results} ${search}` };
     const drop = research[0].item;
     return {
         pokemons: pokedrops.flatMap((pokemon) => ["maindropdata", "raredropdata", "optdrop1data", "optdrop2data"]

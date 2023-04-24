@@ -20,7 +20,7 @@ export const commands = {
 };
 
 
-
+// Event Loader
 Logger.info("Loading events\n\n###############\n");
 
 readdirSync("./dist/events")
@@ -46,6 +46,5 @@ readdirSync("./dist/events")
 
 Logger.success("All events have been loaded\n\n###############\n");
 
-client.application?.commands.set([]).then(() => console.log("commandes supprimés"))
 
 client.login(config.token);

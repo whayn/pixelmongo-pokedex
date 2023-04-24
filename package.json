@@ -8,7 +8,8 @@
 		"start": "tsc && node dist/index.js",
 		"deploy": "tsc && node dist/deployer.js",
 		"scraper-test": "tsc && node dist/utils/wiki-scraper",
-		"dumper": "tsc && node dist/dumper"
+		"dumper": "tsc && node dist/dumper",
+		"prod": "npx tsc && node dist/index"
 	},
 	"keywords": [],
 	"author": "",

@@ -35,6 +35,7 @@ exports.commands = {
     global: (0, fs_1.readdirSync)(path.join(__dirname, "./commands/global/")).map((file) => require(`./commands/global/${file}`)),
     guilds: (0, fs_1.readdirSync)("./dist/commands/guilds").map((file) => require(`./commands/guilds/${file}`))
 };
+// Event Loader
 logger_1.Logger.info("Loading events\n\n###############\n");
 (0, fs_1.readdirSync)("./dist/events")
     .filter((file) => (file.endsWith(".js")))
@@ -59,5 +60,10 @@ logger_1.Logger.info("Loading events\n\n###############\n");
     }
 });
 logger_1.Logger.success("All events have been loaded\n\n###############\n");
-client.application?.commands.set([]).then(() => console.log("commandes supprimés"));
 client.login(config_1.config.token);
+// Command Initialiser
+client.application?.commands.set(exports.commands.global.map(command => command.options)).then(cmds => { console.log("Commands have been loaded"); console.log(cmds); });
+config_1.config.guildIds.forEach(async (guildId) => {
+    const guild = await client.guilds.fetch(guildId);
+    client.application?.commands.set(exports.commands.guilds.map(command => command.options), guildId).then(cmds => { console.log(`Commands for ${guildId} have been loaded`); console.log(cmds); });
+});
