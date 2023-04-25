@@ -1,7 +1,7 @@
 import { config } from "../config"
 
 export const Notifier = {
-	error: (message: string) => {
+	error: (message: string, ephemeral: boolean = false) => {
 		return {
 			embeds: [{
 				"title": "❌ Une erreur s'est produite",
@@ -10,7 +10,7 @@ export const Notifier = {
 			}]
 		}
 	},
-	warning: (message: string) => {
+	warning: (message: string, ephemeral: boolean = false) => {
 		return {
 			embeds: [{
 				"title": "⚠️ Attention !",
@@ -19,7 +19,7 @@ export const Notifier = {
 			}]
 		}
 	},
-	info: (message: string) => {
+	info: (message: string, ephemeral: boolean = false) => {
 		return {
 			embeds: [{
 				"title": "ℹ️ Information",

@@ -61,9 +61,3 @@ logger_1.Logger.info("Loading events\n\n###############\n");
 });
 logger_1.Logger.success("All events have been loaded\n\n###############\n");
 client.login(config_1.config.token);
-// Command Initialiser
-client.application?.commands.set(exports.commands.global.map(command => command.options)).then(cmds => { console.log("Commands have been loaded"); console.log(cmds); });
-config_1.config.guildIds.forEach(async (guildId) => {
-    const guild = await client.guilds.fetch(guildId);
-    client.application?.commands.set(exports.commands.guilds.map(command => command.options), guildId).then(cmds => { console.log(`Commands for ${guildId} have been loaded`); console.log(cmds); });
-});

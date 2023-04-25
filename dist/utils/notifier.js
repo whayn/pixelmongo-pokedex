@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Notifier = void 0;
 const config_1 = require("../config");
 exports.Notifier = {
-    error: (message) => {
+    error: (message, ephemeral = false) => {
         return {
             embeds: [{
                     "title": "❌ Une erreur s'est produite",
@@ -12,7 +12,7 @@ exports.Notifier = {
                 }]
         };
     },
-    warning: (message) => {
+    warning: (message, ephemeral = false) => {
         return {
             embeds: [{
                     "title": "⚠️ Attention !",
@@ -21,7 +21,7 @@ exports.Notifier = {
                 }]
         };
     },
-    info: (message) => {
+    info: (message, ephemeral = false) => {
         return {
             embeds: [{
                     "title": "ℹ️ Information",
