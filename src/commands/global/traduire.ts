@@ -31,7 +31,7 @@ module.exports = {
 
 			interaction.reply({
 				embeds: [{
-					title: `Translations for ${optionPokemon}`,
+					title: `Traductions pour ${optionPokemon}`,
 					color: config.colors.red,
 					description: `${typedCorrectly}\`\`\`\n${translatedPoke}\`\`\``,
 					//thumbnail: { url: "https://cdn.discordapp.com/attachments/893131089688805406/1100356531616227388/1c42c07d-c320-49d9-b49c-48a367ab301c.jpg" }

@@ -23,15 +23,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commands = void 0;
+exports.client = void 0;
 const discord_js_1 = require("discord.js");
 const path = __importStar(require("path"));
 const fs_1 = require("fs");
 const logger_1 = require("./utils/logger");
 require("dotenv/config");
 const config_1 = require("./config");
-const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
-exports.commands = {
+exports.client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
+exports.client.commands = {
     global: (0, fs_1.readdirSync)(path.join(__dirname, "./commands/global/")).map((file) => require(`./commands/global/${file}`)),
     guilds: (0, fs_1.readdirSync)("./dist/commands/guilds").map((file) => require(`./commands/guilds/${file}`))
 };
@@ -47,11 +47,11 @@ logger_1.Logger.info("Loading events\n\n###############\n");
             throw new Error(`./dist/events/${file} does not exist`);
         const event = require(`./events/${file}`);
         if (!event.once) {
-            client.on(file.replace('.js', ''), (...args) => event.execute(client, args));
+            exports.client.on(file.replace('.js', ''), (...args) => event.execute(exports.client, args));
             logger_1.Logger.success(`[Events] Successfully loaded ${file} (on)`);
         }
         else {
-            client.once(file.replace('.js', ''), (...args) => event.execute(client, args));
+            exports.client.once(file.replace('.js', ''), (...args) => event.execute(exports.client, args));
             logger_1.Logger.success(`[Events] Successfully loaded ${file} (once)`);
         }
     }
@@ -60,4 +60,4 @@ logger_1.Logger.info("Loading events\n\n###############\n");
     }
 });
 logger_1.Logger.success("All events have been loaded\n\n###############\n");
-client.login(config_1.config.token);
+exports.client.login(config_1.config.token);

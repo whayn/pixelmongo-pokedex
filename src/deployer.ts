@@ -1,11 +1,11 @@
 import { config } from "./config";
 import { publishSlashCommands } from "./utils/deploy";
-import { commands } from "./index";
 import { Logger } from "./utils/logger";
+import { client } from './index'
 
 const { clientId, token, guildIds } = config
-const globalCommands = commands.global.map(cmd => cmd.options)
-const guildsCommands = commands.guilds.map(cmd => cmd.options) as any
+const globalCommands = client.commands.global.map(cmd => cmd.options)
+const guildsCommands = client.commands.guilds.map(cmd => cmd.options) as any
 
 
 (async () => {

@@ -3,14 +3,17 @@ import * as path from "path";
 import { readdirSync, existsSync } from "fs";
 import { Logger } from "./utils/logger";
 import 'dotenv/config'
-
-
 import { config } from "./config";
 
+declare module 'discord.js' {
+	interface Client {
+		commands: { global: any[]; guilds: any[] };
+	}
+}
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+export const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-export const commands = {
+client.commands = {
 	global: readdirSync(path.join(__dirname, "./commands/global/")).map(
 		(file) => require(`./commands/global/${file}`),
 	),
@@ -18,7 +21,6 @@ export const commands = {
 		(file) => require(`./commands/guilds/${file}`)
 	)
 };
-
 
 // Event Loader
 Logger.info("Loading events\n\n###############\n");

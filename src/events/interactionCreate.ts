@@ -1,7 +1,6 @@
 import { Events, Interaction, Client, BaseInteraction } from "discord.js";
 import { readdirSync } from "fs";
 import * as path from "path";
-import { commands } from "../index";
 import { config } from '../config'
 
 
@@ -12,7 +11,7 @@ module.exports = {
 			const { commandName, guildId } = interaction
 
 			//			const guild_commands = commands.guilds.find(({ id }) => id === guildId)
-			const table = config.guildIds.includes(guildId as string) ? [...commands.global, ...commands.guilds] : commands.global
+			const table = config.guildIds.includes(guildId as string) ? [...client.commands.global, ...client.commands.guilds] : client.commands.global
 
 			const command = table.find(({ options }) => options.name == commandName)
 
